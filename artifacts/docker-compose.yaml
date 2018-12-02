@@ -177,3 +177,6 @@ services:
     environment:
     - TARGET_NETWORK=deploy
     container_name: neo4jservice
+    depends_on:
+      - rabbitmq.example.com
+      - neo4j.example.com
