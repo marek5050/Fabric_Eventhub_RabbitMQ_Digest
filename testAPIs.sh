@@ -197,11 +197,13 @@ TRX_ID=$(curl -s -X POST \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
 	"fcn":"move",
-	"args":["a","b","10"]
+	"args":["1","{\"assetId\":\"coffee beans\"}"]
 }')
-echo "Transaction ID is $TRX_ID"
-echo
-echo
+
+
+
+
+
 echo "POST invoke chaincode on peers of Org1 and Org2"
 echo
 TRX_ID=$(curl -s -X POST \
@@ -211,11 +213,11 @@ TRX_ID=$(curl -s -X POST \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
 	"fcn":"move",
-	"args":["a","b","10"]
+	"args":["2","{\"assetId\":\"roasted coffee beans\",\"assetIdParents\":[\"coffee beans\"]}"]
 }')
-echo "Transaction ID is $TRX_ID"
-echo
-echo
+
+
+
 echo "POST invoke chaincode on peers of Org1 and Org2"
 echo
 TRX_ID=$(curl -s -X POST \
@@ -225,11 +227,16 @@ TRX_ID=$(curl -s -X POST \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
 	"fcn":"move",
-	"args":["a","b","11"]
+	"args":["3","{\"assetId\":\"flavored coffee beans\",\"assetIdParents\":[\"coffee beans\"]}"]
 }')
-echo "Transaction ID is $TRX_ID"
-echo
-echo
+
+
+
+
+
+
+
+
 echo "POST invoke chaincode on peers of Org1 and Org2"
 echo
 TRX_ID=$(curl -s -X POST \
@@ -239,11 +246,11 @@ TRX_ID=$(curl -s -X POST \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
 	"fcn":"move",
-	"args":["a","b","12"]
+	"args":["4","{\"assetId\":\"packaged grinded coffee\",\"assetIdParents\":[\"roasted coffee beans\"]}"]
 }')
-echo "Transaction ID is $TRX_ID"
-echo
-echo
+
+
+
 echo "POST invoke chaincode on peers of Org1 and Org2"
 echo
 TRX_ID=$(curl -s -X POST \
@@ -253,11 +260,10 @@ TRX_ID=$(curl -s -X POST \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
 	"fcn":"move",
-	"args":["a","b","13"]
+	"args":["5","{\"assetId\":\"package premium coffee\",\"assetIdParents\":[\"roasted coffee beans\"]}"]
 }')
-echo "Transaction ID is $TRX_ID"
-echo
-echo
+
+
 echo "POST invoke chaincode on peers of Org1 and Org2"
 echo
 TRX_ID=$(curl -s -X POST \
@@ -267,10 +273,23 @@ TRX_ID=$(curl -s -X POST \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
 	"fcn":"move",
-	"args":["a","b","14"]
+	"args":["6","{\"assetId\":\"grinded flavored coffee\",\"assetIdParents\":[\"flavored coffee beans\"]}"]
 }')
-echo "Transaction ID is $TRX_ID"
+
+
+
+echo "POST invoke chaincode on peers of Org1 and Org2"
 echo
+TRX_ID=$(curl -s -X POST \
+  http://$HOSTPORT/channels/mychannel/chaincodes/mycc \
+  -H "authorization: Bearer $ORG1_TOKEN" \
+  -H "content-type: application/json" \
+  -d '{
+	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
+	"fcn":"move",
+	"args":["7","{\"assetId\":\"magic powder\",\"assetIdParents\":[\"flavored coffee beans\", \"roasted coffee beans\"]}"]
+}')
+
 
 
 echo "GET query Block by blockNumber"
