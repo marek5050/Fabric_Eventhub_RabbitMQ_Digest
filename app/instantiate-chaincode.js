@@ -91,7 +91,7 @@ var instantiateChaincode = async function(peers, channelName, chaincodeName, cha
 
 		if (all_good) {
 			logger.info(util.format(
-				'Successfully sent Proposal and received ProposalResponse: Status - %s, message - "%s", metadata - "%s", endorsement signature: %s',
+				'Successfully sent Proposal and received ProposalResponse: Status - %s, message - "%s", metadata - "%s"',
 				proposalResponses[0].response.status, proposalResponses[0].response.message,
 				proposalResponses[0].response.payload, proposalResponses[0].endorsement.signature));
 

@@ -54,7 +54,7 @@ async function register(org_name, username) {
                 console.log('Failed to receive the block event ::'+error);
                 //this is the callback if something goes wrong with the event registration or processing
                 reject(new Error('There was a problem with the eventhub ::'+error));
-            },{startBlock:7}
+            },{startBlock:1}
         )
 
     });
