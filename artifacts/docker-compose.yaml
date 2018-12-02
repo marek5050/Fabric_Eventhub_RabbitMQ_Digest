@@ -171,3 +171,9 @@ services:
     ports:
     - "4000:4000"
     container_name: api_access
+
+  neo4jservice:
+    image: marek5050/neo4j-service
+    environment:
+    - TARGET_NETWORK=deploy
+    container_name: neo4jservice
