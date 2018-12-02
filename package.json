@@ -4,7 +4,9 @@
   "description": "A balance-transfer example node program to demonstrate using node.js SDK APIs",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "build": "docker build -t marek5050/node-web-app .",
+    "deploy":"docker run --network=artifacts_default  -p 49160:4000 -d marek5050/node-web-app"
   },
   "keywords": [
     "fabric-client sample app",

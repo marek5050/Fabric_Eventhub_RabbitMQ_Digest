@@ -7,6 +7,28 @@ version: '2'
 
 services:
 
+  rabbitmq.example.com:
+    image: rabbitmq:3-management
+    hostname: 'rabbitmq'
+    container_name: rabbitmq.example.com
+    environment:
+      RABBITMQ_ERLANG_COOKIE: 'SECRETRABBITCOOKIEYUM'
+      RABBITMQ_DEFAULT_USER: 'guest'
+      RABBITMQ_DEFAULT_PASS: 'guest'
+      RABBITMQ_DEFAULT_VHOST: '/'
+    ports:
+    - '15672:15672'
+    - '5672:5672'
+
+  neo4j.example.com:
+    image: neo4j
+    container_name: neo4j.example.com
+    ports:
+    - '7474:7474'
+    - '7689:7687'
+    volumes:
+    - $HOME/neo4j/data:/data
+
   ca.org1.example.com:
     image: hyperledger/fabric-ca
     environment:
@@ -140,3 +162,12 @@ services:
         - ./channel/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/:/etc/hyperledger/crypto/peer
     depends_on:
       - orderer.example.com
+
+
+  api_access:
+    image: marek5050/node-web-app
+    environment:
+    - TARGET_NETWORK=deploy
+    ports:
+    - "4000:4000"
+    container_name: api_access
