@@ -42,7 +42,9 @@ var Chaincode = class {
     }
   }
 
-  async Invoke(stub) {
+
+
+    async Invoke(stub) {
     let ret = stub.getFunctionAndParameters();
     console.info(ret);
     let method = this[ret.fcn];
@@ -60,6 +62,28 @@ var Chaincode = class {
       return shim.error(err);
     }
   }
+
+    async create(stub, args) {
+        console.info('========= example_cc create =========', args);
+
+        if (args.length !== 2) {
+            return shim.error('Incorrect number of arguments. Expecting 2');
+        }
+
+        let A = args[0];
+        let Aval = args[1];
+
+        console.info('========= example_cc create =========', args);
+        console.log(Aval);
+        console.log( Buffer.from(Aval));
+
+        try {
+            await stub.putState(A, Buffer.from(Aval));
+            return shim.success();
+        } catch (err) {
+            return shim.error(err);
+        }
+    }
 
   async move(stub, args) {
     if (args.length != 3) {

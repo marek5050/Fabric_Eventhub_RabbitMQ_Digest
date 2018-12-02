@@ -58,14 +58,20 @@ app.set('secret', 'thisismysecret');
 app.use(expressJWT({
 	secret: 'thisismysecret'
 }).unless({
-	path: ['/users']
+	path: ['/users', /\api-docs*/]
 }));
+
 app.use(bearerToken());
+
 app.use(function(req, res, next) {
 	logger.debug(' ------>>>>>> new request for %s',req.originalUrl);
 	if (req.originalUrl.indexOf('/users') >= 0) {
 		return next();
 	}
+
+    if (req.originalUrl.indexOf('/api-docs') >= 0 ){
+        return next();
+    }
 
 	var token = req.token;
 	jwt.verify(token, app.get('secret'), function(err, decoded) {
@@ -437,3 +443,10 @@ app.post('/eventhub', async function(req, res) {
     let message = await event_hub.register(req.orgname,req.username);
     res.send(message);
 });
+
+
+var swaggerUi = require('swagger-ui-express'),
+    swaggerDocument = require('./swagger.json');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use('/api/v1', app);

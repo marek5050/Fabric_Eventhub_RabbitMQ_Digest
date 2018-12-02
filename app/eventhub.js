@@ -82,25 +82,33 @@ async function recordTransactionsFromBlocks(block, source, cb) {
             //transaction doesnot exist, so create the transaction
             var sources = [];
             sources.push(source);
-            var txRecord = {
-                tx_id: tx_id,
-                timestamp: Date.now(),
-                tx_object: tx_data.payload.data.actions[0],
-                sources: sources,
-                status: 0
-            };
-            // Required variables for filtering.
-            var tx = tx_data.payload.data.actions[0];
-            // tx.payload.action.proposal_response_payload.extension.results.ns_rwset[1].rwset.writes[0].value = JSON.parse(tx.payload.action.proposal_response_payload.extension.results.ns_rwset[1].rwset.writes[0].value);
-            console.log(tx.payload.action.proposal_response_payload.extension.results.ns_rwset[1].rwset.writes[0]);
-            var writeset = tx.payload.action.proposal_response_payload.extension.results.ns_rwset[1].rwset.writes[0];
-            try{
-                // await tx_db.create(txRecord);
-                await send(writeset);
-                // console.log(send);
-                console.log('Successfully added transaction to database.',writeset);
-            } catch(err){
-                console.log(err);
+
+            for (var action_idx in tx_data.payload.data.actions){
+                var tx = tx_data.payload.data.actions[action_idx];
+
+                for (var idx in tx.payload.action.proposal_response_payload.extension.results.ns_rwset){
+
+                    var record = tx.payload.action.proposal_response_payload.extension.results.ns_rwset[idx];
+
+                    console.log(record.rwset.writes);
+
+                    if (record["namespace"] === "lscc"){
+                        continue;
+                    }
+
+                    var writeset = record.rwset.writes[0];
+                    var val = JSON.parse(writeset["value"]);
+                    if (writeset["key"]) {
+                        val["key"]=writeset["key"];
+                        val["txid"]=tx_id;
+                    }
+                    try{
+                        await send(val);
+                        console.log('Successfully added transaction to database.',val);
+                    } catch(err){
+                        console.log(err);
+                    }
+                }
             }
         } else{
             if (document.sources.indexOf(source) > -1) {

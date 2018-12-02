@@ -16,7 +16,7 @@ starttime=$(date +%s)
 
 
 HOSTPORT=169.60.181.7:49160
-HOSTPORT=localhost:4000
+HOSTPORT=localhost:4001
 
 
 # Print the usage message
@@ -183,7 +183,7 @@ curl -s -X POST \
 	\"chaincodeName\":\"mycc\",
 	\"chaincodeVersion\":\"v0\",
 	\"chaincodeType\": \"$LANGUAGE\",
-	\"args\":[\"a\",\"100\",\"b\",\"200\"]
+	\"args\":[\"a\",\"100\"]
 }"
 echo
 echo
@@ -196,8 +196,8 @@ TRX_ID=$(curl -s -X POST \
   -H "content-type: application/json" \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
-	"fcn":"move",
-	"args":["a","b","10"]
+	"fcn":"set",
+	"args":["a","10"]
 }')
 echo "Transaction ID is $TRX_ID"
 echo
@@ -210,8 +210,8 @@ TRX_ID=$(curl -s -X POST \
   -H "content-type: application/json" \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
-	"fcn":"move",
-	"args":["a","b","10"]
+	"fcn":"set",
+	"args":["b","10"]
 }')
 echo "Transaction ID is $TRX_ID"
 echo
@@ -224,8 +224,8 @@ TRX_ID=$(curl -s -X POST \
   -H "content-type: application/json" \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
-	"fcn":"move",
-	"args":["a","b","11"]
+	"fcn":"set",
+	"args":["c","22"]
 }')
 echo "Transaction ID is $TRX_ID"
 echo
@@ -238,8 +238,8 @@ TRX_ID=$(curl -s -X POST \
   -H "content-type: application/json" \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
-	"fcn":"move",
-	"args":["a","b","12"]
+	"fcn":"set",
+	"args":["d","13"]
 }')
 echo "Transaction ID is $TRX_ID"
 echo
@@ -252,8 +252,8 @@ TRX_ID=$(curl -s -X POST \
   -H "content-type: application/json" \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
-	"fcn":"move",
-	"args":["a","b","13"]
+	"fcn":"set",
+	"args":["g","20"]
 }')
 echo "Transaction ID is $TRX_ID"
 echo
@@ -266,8 +266,8 @@ TRX_ID=$(curl -s -X POST \
   -H "content-type: application/json" \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
-	"fcn":"move",
-	"args":["a","b","14"]
+	"fcn":"set",
+	"args":["x","99"]
 }')
 echo "Transaction ID is $TRX_ID"
 echo

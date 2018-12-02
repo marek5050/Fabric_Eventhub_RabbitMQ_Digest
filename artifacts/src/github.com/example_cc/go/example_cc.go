@@ -73,7 +73,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 	logger.Info("########### example_cc0 Invoke ###########")
 
 	function, args := stub.GetFunctionAndParameters()
-	
+
 	if function == "delete" {
 		// Deletes an entity from its state
 		return t.delete(stub, args)
@@ -87,6 +87,12 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 		// Deletes an entity from its state
 		return t.move(stub, args)
 	}
+
+	if function == "create" {
+		// Deletes an entity from its state
+		return t.create(stub, args)
+	}
+
 
 	logger.Errorf("Unknown action, check the first argument, must be one of 'delete', 'query', or 'move'. But got: %v", args[0])
 	return shim.Error(fmt.Sprintf("Unknown action, check the first argument, must be one of 'delete', 'query', or 'move'. But got: %v", args[0]))
@@ -148,6 +154,34 @@ func (t *SimpleChaincode) move(stub shim.ChaincodeStubInterface, args []string) 
 
         return shim.Success(nil);
 }
+
+
+
+func (t *SimpleChaincode) create(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	// must be an invoke
+	var A string    // Entities
+	var Aval string  // Asset holdings
+	var err error
+
+	if len(args) != 2 {
+		return shim.Error("Incorrect number of arguments. Expecting 3, function followed by id and value")
+	}
+
+	A = args[0]
+	Aval = args[1]
+
+	// Get the state from the ledger
+	// TODO: will be nice to have a GetAllState call to ledger
+
+	// Write the state back to the ledger
+	err = stub.PutState(A, []byte(Aval))
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+        return shim.Success(nil);
+}
+
 
 // Deletes an entity from state
 func (t *SimpleChaincode) delete(stub shim.ChaincodeStubInterface, args []string) pb.Response {

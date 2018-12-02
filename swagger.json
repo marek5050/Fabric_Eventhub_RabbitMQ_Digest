@@ -1,0 +1,228 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Yet Another Node.js Blogg Application API",
+    "description": "Yet Another Node.js Blogg Application API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Base",
+      "description": "API for users in the system"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/eventhub": {
+      "post": {
+        "tags": [
+          "Eventhub"
+        ],
+        "description": "Start eventhub monitoring",
+        "parameters": [],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Eventhub was started"
+          }
+        }
+        }
+    },
+    "/users": {
+      "parameters": [ ],
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "parameters":[
+          { "in":"body",
+            "name":"user",
+            "schema":{
+              "type": "string",
+              "example":"username=Barry&orgName=Org2"
+            },
+            "required":true
+          },{ "in":"header",
+            "name":"Content-type",
+            "schema":{
+              "type":"string",
+              "default":"application/x-www-form-urlencoded"
+            },
+            "required":true
+          }
+        ],
+        "summary": "Request Token",
+        "responses": {
+          "200": {
+            "description": "User is found",
+            "schema": {
+              "type":"string"
+            }
+          }
+        }
+      }},
+      "/channels/mychannel/chaincodes/{chaincode}": {
+      "parameters": [
+        {
+          "name": "chaincode",
+          "in": "path",
+          "required": true,
+          "description": "Name of chaincode",
+          "type": "string"
+        }
+      ],
+      "post": {
+        "tags": [
+          "Chaincode"
+        ],
+        "parameters":[
+          { "in":"body",
+            "name":"invoke",
+            "schema":{
+              "$ref": "#/definitions/invoke"
+            },
+            "required":true
+          },{ "in":"header",
+            "name":"authorization",
+            "schema":{
+              "type":"string",
+              "example":"Bearer $TOKEN"
+            },
+            "required":true
+          }
+        ],
+        "summary": "Invoke Chaincode",
+        "responses": {
+          "200": {
+            "description": "User is found",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user with given ID",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "User is deleted",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update user with give ID",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User is updated",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "required": [
+        "email",
+        "_id"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        }
+      }
+    },
+    "invoke":{
+      "required": [
+        "peers",
+        "fcn",
+        "args"
+      ],
+      "properties": {
+        "peers": {
+          "type": "array",
+          "uniqueItems": true
+        },
+        "fcn": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "args": {
+          "type": "array"
+        }
+      },
+      "example":"{\"peers\": [\"peer0.org1.example.com\",\"peer0.org2.example.com\"], \"fcn\":\"create\", \"args\":[\"item_id\",\"{\"assetId\":\"Jod\",\"assetIdParents\":[\"ahoj\"]}\"]}"
+    },
+    "query":{
+      "required": [
+        "peers",
+        "fcn",
+        "args"
+      ],
+      "properties": {
+        "peers": {
+          "type": "array",
+          "uniqueItems": true
+        },
+        "fcn": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "args": {
+          "type": "array"
+        }
+      }
+    },
+    "Users": {
+      "type": "array",
+      "$ref": "#/definitions/User"
+    }
+  }
+}
