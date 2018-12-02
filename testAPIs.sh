@@ -196,7 +196,7 @@ TRX_ID=$(curl -s -X POST \
   -H "content-type: application/json" \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
-	"fcn":"move",
+	"fcn":"create",
 	"args":["1","{\"assetId\":\"coffee beans\"}"]
 }')
 
@@ -212,7 +212,7 @@ TRX_ID=$(curl -s -X POST \
   -H "content-type: application/json" \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
-	"fcn":"move",
+	"fcn":"create",
 	"args":["2","{\"assetId\":\"roasted coffee beans\",\"assetIdParents\":[\"coffee beans\"]}"]
 }')
 
@@ -226,7 +226,7 @@ TRX_ID=$(curl -s -X POST \
   -H "content-type: application/json" \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
-	"fcn":"move",
+	"fcn":"create",
 	"args":["3","{\"assetId\":\"flavored coffee beans\",\"assetIdParents\":[\"coffee beans\"]}"]
 }')
 
@@ -245,7 +245,7 @@ TRX_ID=$(curl -s -X POST \
   -H "content-type: application/json" \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
-	"fcn":"move",
+	"fcn":"create",
 	"args":["4","{\"assetId\":\"packaged grinded coffee\",\"assetIdParents\":[\"roasted coffee beans\"]}"]
 }')
 
@@ -259,7 +259,7 @@ TRX_ID=$(curl -s -X POST \
   -H "content-type: application/json" \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
-	"fcn":"move",
+	"fcn":"create",
 	"args":["5","{\"assetId\":\"package premium coffee\",\"assetIdParents\":[\"roasted coffee beans\"]}"]
 }')
 
@@ -272,7 +272,7 @@ TRX_ID=$(curl -s -X POST \
   -H "content-type: application/json" \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
-	"fcn":"move",
+	"fcn":"create",
 	"args":["6","{\"assetId\":\"grinded flavored coffee\",\"assetIdParents\":[\"flavored coffee beans\"]}"]
 }')
 
@@ -286,7 +286,7 @@ TRX_ID=$(curl -s -X POST \
   -H "content-type: application/json" \
   -d '{
 	"peers": ["peer0.org1.example.com","peer0.org2.example.com"],
-	"fcn":"move",
+	"fcn":"create",
 	"args":["7","{\"assetId\":\"magic powder\",\"assetIdParents\":[\"flavored coffee beans\", \"roasted coffee beans\"]}"]
 }')
 
