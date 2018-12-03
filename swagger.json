@@ -198,7 +198,7 @@
           "type": "array"
         }
       },
-      "example":"{\"peers\": [\"peer0.org1.example.com\",\"peer0.org2.example.com\"], \"fcn\":\"create\", \"args\":[\"item_id\",\"{\"assetId\":\"Jod\",\"assetIdParents\":[\"ahoj\"]}\"]}"
+      "example":"{\"peers\": [\"peer0.org1.example.com\",\"peer0.org2.example.com\"], \"fcn\":\"create\", \"args\":[\"item_id\",\\\"{\\\"assetId\\\":\\\"Jod\\\",\\\"assetIdParents\\\":[\\\"ahoj\\\"]}\\\"]}"
     },
     "query":{
       "required": [
